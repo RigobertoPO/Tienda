@@ -1,0 +1,31 @@
+Create database Tienda;
+Use Tienda;
+create table Usuarios(
+Id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+NombreCompleto varchar(120), 
+Direccion varchar(150),
+CorreoElectronico varchar(100),
+Password varchar(100),
+Tipo Int);
+
+create table TipoProductos(
+Id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+Descripcion varchar(50));
+
+create table Productos(
+Id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+Nombre varchar(120), 
+IdTipoProducto int,
+Existencia int,
+precio float,
+FOREIGN KEY (IdTipoProducto) REFERENCES TipoProductos(Id));
+
+create table Ventas(
+Id int NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+IdUsuario Int, 
+IdProducto Int, 
+Fecha Date, 
+Cantidad Int, 
+Importe float, 
+FOREIGN KEY (IdUsuario) REFERENCES Usuarios(Id),
+FOREIGN KEY (IdProducto) REFERENCES Productos(Id));
