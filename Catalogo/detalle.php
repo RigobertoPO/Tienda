@@ -3,7 +3,19 @@ session_start();
 if(isset($_SESSION['nombreUsuario']))
 {
 	$usuarioSesion=$_SESSION['nombreUsuario'];
-	$tipoSesion=$_SESSION['tipoUsuario'];
+    $tipoSesion=$_SESSION['tipoUsuario'];
+    $id=$_GET['id'];
+    include_once 'conexion.php';
+    $mysqlConexion=new mysqli($servidorBD,$usuarioBD,$claveBD,$nombreBD);
+    $consulta="SELECT P.Id,P.Nombre,TP.Descripcion,P.Precio,P.Existencia FROM productos as P JOIN tipoproductos as TP on P.IdTipoProducto=TP.Id WHERE P.Id='".$id."'";
+    $resultado=$mysqlConexion->query($consulta);
+    if($registro=$resultado->fetch_array(MYSQLI_ASSOC))
+    {
+        $nombre=$registro['Nombre'];
+        $descripcion=$registro['Descripcion'];
+        $precio=$registro['Precio'];
+        $existencia=$registro['Existencia'];
+    }
 }
 else
 {
@@ -60,7 +72,7 @@ else
 					?>
 				</a>
 			</li>			
-		</ul>
+		</ul>	
 	</nav>
 	</header>
 	<!-- Main -->
@@ -68,18 +80,25 @@ else
 		<div class="container">
 
 			<header class="major special">
-				<h2>Nosotros</h2>
-				<hr>
-				<h4>Misión</h4>
-				<p>...</p>
-				<h4>Visión</h4>
-				<p>...</p>
-				<h4>Valores</h4>
-				<p>...</p>
-				<h4>Nuestra Historia</h4>
-				<p>...</p>
+				<h2>Detalles del producto</h2>
 			</header>
-
+            <form action="guardarCompra.php" method="post">
+                            <label>Id</label>
+                            <input type="text" name="id" readonly value="<?php echo $id ?>">
+                            <label>Nombre</label>
+                            <input type="text" name="nombre" readonly value="<?php echo $nombre ?>">
+                            <label>Descripción</label>
+                            <input type="text" name="descripcion" readonly value="<?php echo $descripcion ?>">
+                            <label>Precio</label>
+                            <input type="text" name="precio" readonly value="<?php echo $precio ?>">
+                            <label>Existencia</label>
+                            <input type="text" name="existencia" readonly value="<?php echo $existencia?>">
+                            <label>Cantidad</label>
+                            <input type="text" name="cantidad" required>
+                            <label>Domicilio de entrega</label>
+                            <input type="text" name="domicilio" required>
+                            <input type="submit" value="Comprar">
+                        </form>
 		</div>
 		</section>
 	<!-- Footer -->
