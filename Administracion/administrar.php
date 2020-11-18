@@ -72,7 +72,11 @@ else
 				<h2>Administrar</h2>
 				<p>...</p>
 			</header>
-
+			<div class="row">
+				<div><a href="Productos/productos.php">Productos</a></div>
+				<div><a href="TiposProductos/tiposProductos.php">Tipos de Productos</a></div>
+				<div><a href="Usuarios/usuario.php">Usuarios</a></div>
+			</div>
 		</div>
 		</section>
 	<!-- Footer -->
