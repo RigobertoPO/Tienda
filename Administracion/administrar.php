@@ -75,7 +75,8 @@ else
 			<div class="row">
 				<div><a href="Productos/productos.php">Productos</a></div>
 				<div><a href="TiposProductos/tiposProductos.php">Tipos de Productos</a></div>
-				<div><a href="Usuarios/usuario.php">Usuarios</a></div>
+				<div><a href="Usuarios/usuarios.php">Usuarios</a></div>
+				<div><a href="Ventas/ventas.php">Ventas</a></div>
 			</div>
 		</div>
 		</section>

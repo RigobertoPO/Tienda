@@ -29,5 +29,6 @@ Cantidad Int,
 Precio float, 
 Importe float, 
 DomicilioEntrega varchar(200),
+FechaEntrega Boolean,
 FOREIGN KEY (IdUsuario) REFERENCES Usuarios(Id),
 FOREIGN KEY (IdProducto) REFERENCES Productos(Id));

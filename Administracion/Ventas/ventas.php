@@ -12,10 +12,10 @@ else
 }
 header('Content-Type: text/html; charset=UTF-8');
 include_once '../../conexion.php';
-if(isset($_GET['idEliminar']))
+if(isset($_GET['idConfirmar']))
 {
 	$mysqlConexion=new mysqli($servidorBD,$usuarioBD,$claveBD,$nombreBD);
-	$sqlConsulta="DELETE FROM Productos WHERE Id=".$_GET['idEliminar'];
+	$sqlConsulta="UPDATE  Ventas set ConfirmarVenta=true WHERE Id=".$_GET['idConfirmar'];
 	$resultado=$mysqlConexion->query($sqlConsulta);
 	header("Location: $_SERVER[PHP_SELF]");
 }
@@ -29,16 +29,10 @@ if(isset($_GET['idEliminar']))
     <link rel="stylesheet" href="../../css/style.css" />
     <title>zapaterias.com</title>
     <script type="text/javascript">
-			function editar_id(id){
-				if(confirm('¿Desea modificar?'))
+			function Confirmar_id(id){
+				if(confirm('¿Desea confirmar la venta?'))
 				{
-					window.location.href='editarProducto.php?idEditar='+id;
-				}
-			}
-			function eliminar_id(id){
-				if(confirm('¿Desea eliminar?'))
-				{
-					window.location.href='productos.php?idEliminar='+id;
+					window.location.href='ventas.php?idConfirmar='+id;
 				}
 			}
 
@@ -85,38 +79,42 @@ if(isset($_GET['idEliminar']))
 		<div class="container">
 
 			<header class="major special">
-				<h2>Catálogo de productos</h2>
-				<p>...</p>
+				<h2>VENTAS</h2>			
             </header>
-			<a href="nuevoProducto.php">Nuevo</a>
-			<a href="../administrar.php">Regresar</a>
+            <a href="../administrar.php">Regresar</a>
             <div>
 					<table>
 						<tr>
 							<th>ID</th>
-							<th>NOMBRE</th>
-							<th>TIPO</th>
-							<th>PRECIO</th>
-							<th>EXISTENCIA</th>
+							<th>CLIENTE</th>
+                            <th>PRODUCTO</th>
+                            <th>FECHA</th>
+                            <th>CANTIDAD</th>
+                            <th>PRECIO</th>
+                            <th>IMPORTE</th>
+                            <th>ENTREGA</th>
 							<th></th>
 						</tr>
 							<?PHP
 								include_once '../../conexion.php';
 								$mysqlConexion=new mysqli($servidorBD,$usuarioBD,$claveBD,$nombreBD);
-								$consulta="SELECT * FROM productos";
+								$consulta="SELECT V.Id,U.NombreCompleto,P.Nombre,V.Fecha,V.Cantidad,V.Precio,V.Importe,DomicilioEntrega FROM ventas as V INNER JOIN usuarios as U on V.IdUsuario=U.Id JOIN productos as P on v.IdProducto=P.Id";
 								$resultado=$mysqlConexion->query($consulta);
 								while($registro=$resultado->fetch_assoc())
 								{									
 									?>
 									<tr>
 										<td><?PHP echo $registro["Id"];?></td>
-										<td><?PHP echo $registro["Nombre"];?></td>
-										<td><?PHP echo $registro["IdTipoProducto"];?></td>
-										<td><?PHP echo $registro["precio"];?></td>
-										<td><?PHP echo $registro["Existencia"];?></td>
+                                        <td><?PHP echo $registro["NombreCompleto"];?></td>
+                                        <td><?PHP echo $registro["Nombre"];?></td>
+                                        <td><?PHP echo $registro["Fecha"];?></td>
+                                        <td><?PHP echo $registro["Cantidad"];?></td>
+                                        <td><?PHP echo $registro["Precio"];?></td>
+                                        <td><?PHP echo $registro["Importe"];?></td>
+                                        <td><?PHP echo $registro["DomicilioEntrega"];?></td>
 										<td>
-										 <a href="javascript:editar_id('<?php echo $registro["Id"];?>')"><img src="../../img/Editar.png" alt=""> </a>
-										 <a href="javascript:eliminar_id('<?php echo $registro["Id"];?>')"><img src="../../img/Cancelar.png" alt=""> </a>
+										 <a href="javascript:Confirmar_id('<?php echo $registro["Id"];?>')"><img src="../../img/Editar.png" alt=""> </a>
+										
 										 </td>
 									</tr>
 									<?PHP
@@ -124,7 +122,7 @@ if(isset($_GET['idEliminar']))
 								
 							?>
 					</table>
-				</div>
+			</div>
 		</div>
 		</section>
 	<!-- Footer -->

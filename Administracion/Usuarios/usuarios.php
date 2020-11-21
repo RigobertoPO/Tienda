@@ -85,35 +85,35 @@ if(isset($_GET['idEliminar']))
 		<div class="container">
 
 			<header class="major special">
-				<h2>Catálogo de productos</h2>
+				<h2>Catálogo de usuarios</h2>
 				<p>...</p>
             </header>
-			<a href="nuevoProducto.php">Nuevo</a>
-			<a href="../administrar.php">Regresar</a>
+            <a href="nuevoUsuario.php">Nuevo</a>
+            <a href="../administrar.php">Regresar</a>
             <div>
 					<table>
 						<tr>
 							<th>ID</th>
 							<th>NOMBRE</th>
-							<th>TIPO</th>
-							<th>PRECIO</th>
-							<th>EXISTENCIA</th>
+                            <th>DIRECCION</th>
+                            <th>CORREO</th>
+                            <th>TIPO</th>
 							<th></th>
 						</tr>
 							<?PHP
 								include_once '../../conexion.php';
 								$mysqlConexion=new mysqli($servidorBD,$usuarioBD,$claveBD,$nombreBD);
-								$consulta="SELECT * FROM productos";
+								$consulta="SELECT * FROM usuarios";
 								$resultado=$mysqlConexion->query($consulta);
 								while($registro=$resultado->fetch_assoc())
 								{									
 									?>
 									<tr>
 										<td><?PHP echo $registro["Id"];?></td>
-										<td><?PHP echo $registro["Nombre"];?></td>
-										<td><?PHP echo $registro["IdTipoProducto"];?></td>
-										<td><?PHP echo $registro["precio"];?></td>
-										<td><?PHP echo $registro["Existencia"];?></td>
+                                        <td><?PHP echo $registro["NombreCompleto"];?></td>
+                                        <td><?PHP echo $registro["Direccion"];?></td>
+                                        <td><?PHP echo $registro["CorreoElectronico"];?></td>
+                                        <td><?PHP echo $registro["Tipo"];?></td>
 										<td>
 										 <a href="javascript:editar_id('<?php echo $registro["Id"];?>')"><img src="../../img/Editar.png" alt=""> </a>
 										 <a href="javascript:eliminar_id('<?php echo $registro["Id"];?>')"><img src="../../img/Cancelar.png" alt=""> </a>

@@ -4,6 +4,7 @@ if(isset($_SESSION['nombreUsuario']))
 {
 	$usuarioSesion=$_SESSION['nombreUsuario'];
 	$tipoSesion=$_SESSION['tipoUsuario'];
+	$idUsuario= $_SESSION['idUsuario'];
 }
 else
 {
@@ -71,7 +72,43 @@ else
 				<h2>Compras</h2>
 				<p>...</p>
 			</header>
-
+            <div>
+					<table>
+						<tr>
+							<th>ID</th>
+							
+                            <th>PRODUCTO</th>
+                            <th>FECHA</th>
+                            <th>CANTIDAD</th>
+                            <th>PRECIO</th>
+                            <th>IMPORTE</th>
+                            <th>ENTREGA</th>
+							<th>ENTREGADO</th>
+						</tr>
+							<?PHP
+								include_once '../conexion.php';
+								$mysqlConexion=new mysqli($servidorBD,$usuarioBD,$claveBD,$nombreBD);
+								$consulta="SELECT V.Id,P.Nombre,V.Fecha,V.Cantidad,V.Precio,V.Importe,V.DomicilioEntrega,V.ConfirmarVenta FROM ventas as V INNER JOIN usuarios as U on V.IdUsuario=U.Id JOIN productos as P on v.IdProducto=P.Id WHERE IdUsuario=".$idUsuario;
+								$resultado=$mysqlConexion->query($consulta);
+								while($registro=$resultado->fetch_assoc())
+								{									
+									?>
+									<tr>
+										<td><?PHP echo $registro["Id"];?></td>
+                                        <td><?PHP echo $registro["Nombre"];?></td>
+                                        <td><?PHP echo $registro["Fecha"];?></td>
+                                        <td><?PHP echo $registro["Cantidad"];?></td>
+                                        <td><?PHP echo $registro["Precio"];?></td>
+                                        <td><?PHP echo $registro["Importe"];?></td>
+                                        <td><?PHP echo $registro["DomicilioEntrega"];?></td>
+										<td><?PHP echo $registro["ConfirmarVenta"];?>	 </td>
+									</tr>
+									<?PHP
+								}
+								
+							?>
+					</table>
+				</div>
 		</div>
 		</section>
 	<!-- Footer -->
